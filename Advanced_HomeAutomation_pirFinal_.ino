@@ -8,8 +8,8 @@
 #define BLYNK_TEMPLATE_NAME "ESP32 Smart Home Automation"
 #define BLYNK_AUTH_TOKEN "8eut-5ocuHFlTa5j9iAmYBJz3F01KLcR"
 
-char ssid[] = "Anurag";
-char pass[] = "12345678";
+char ssid[] = "IOTA";
+char pass[] = "1234abc";
 int personCount = 0; // Keeps track of number of persons in the room
 
 #define BLYNK_PRINT Serial
