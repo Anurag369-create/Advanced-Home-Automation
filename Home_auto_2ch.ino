@@ -23,7 +23,7 @@ Preferences pref;
 #define VPIN_BUTTON_1 V1
 #define VPIN_BUTTON_2 V2
 #define VPIN_BUTTON_ON V3
-#define VPIN_BUTTON_OFF V5
+#define VPIN_BUTTON_OFF V4
 
 bool toggleState_1 = LOW;
 bool toggleState_2 = LOW;
