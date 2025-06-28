@@ -7,8 +7,8 @@
 #define BLYNK_AUTH_TOKEN "vnOBInfsfOS1znhQjPnjTeyaF5y-ZGG0"
 
 
-char ssid[] = "Anurag";
-char pass[] = "12345678";
+char ssid[] = "IOTA";
+char pass[] = "1234abcd";
 
 #define BLYNK_PRINT Serial
 #include <WiFi.h>
