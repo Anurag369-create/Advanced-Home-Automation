@@ -4,7 +4,7 @@
 #define pir2 33 // Outside PIR sensor
 #define ledPin 5 // LED pin
 
-int state = 0; //  LED state 
+int state = 0; //  PIR state 
 bool pir1_triggered = false;
 bool pir2_triggered = false;
 unsigned long pir1_time = 0;
