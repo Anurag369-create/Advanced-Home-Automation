@@ -1,4 +1,5 @@
 // using esp32
+// just check with one led at pin 5
 #define pir1  32 // inside
 #define pir2  33 //outside
 #define relayPin  5
