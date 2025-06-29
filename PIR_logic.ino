@@ -2,21 +2,21 @@
 // Controlling an LED at pin 5 based on PIR sensors
 #define pir1 32 // Inside PIR sensor
 #define pir2 33 // Outside PIR sensor
-#define ledPin 5 // LED pin 
+#define ledPin 5 // LED pin
 
-int state = 0; // Tracks LED state (0 = OFF, 1 = ON)
+int state = 0; //  LED state 
 bool pir1_triggered = false;
 bool pir2_triggered = false;
 unsigned long pir1_time = 0;
 unsigned long pir2_time = 0;
 const unsigned long timeout = 3000; // 3 seconds timeout for PIR sequence
-int personCount=0;
+int personCount = 0; 
 
 void setup() {
   pinMode(pir1, INPUT);
   pinMode(pir2, INPUT);
   pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW); // Initialize LED as OFF
+  digitalWrite(ledPin, LOW); 
   Serial.begin(115200);
   Serial.println("System Initialized");
 }
@@ -47,11 +47,12 @@ void pirControl() {
     personCount++;
     Serial.println("Entry Detected → Person Count: " + String(personCount));
     if (state == 0) {
-      all_SwitchOn();
-      Serial.println("Appliances ON");
+      state = 1;
+      digitalWrite(ledPin, HIGH); 
+      Serial.println("LED ON");
     }
     resetTriggers();
-    delay(1000);
+    delay(1000);      // Prevent immediate retriggering
   }
 
   // Exit: PIR2 then PIR1 within timeout
@@ -59,21 +60,22 @@ void pirControl() {
     if (personCount > 0) personCount--;
     Serial.println("Exit Detected → Person Count: " + String(personCount));
     if (personCount == 0 && state == 1) {
-      all_SwitchOff();
-      Serial.println("Appliances OFF");
+      state = 0;
+      digitalWrite(ledPin, LOW); 
+      Serial.println("LED OFF");
     }
     resetTriggers();
-    delay(1000);
+    delay(1000);   // Prevent immediate retriggering
   }
 
   // Timeout auto-reset
   if (pir1_triggered && now - pir1_time > timeout) pir1_triggered = false;
   if (pir2_triggered && now - pir2_time > timeout) pir2_triggered = false;
 
-  // Relay status feedback
+  // LED status feedback
   static unsigned long lastPrint = 0;
   if (now - lastPrint > 1000) {
-    Serial.print("Relay Status: ");
+    Serial.print("LED Status: ");
     Serial.println(state ? "ON" : "OFF");
     lastPrint = now;
   }
