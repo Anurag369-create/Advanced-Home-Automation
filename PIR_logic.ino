@@ -10,6 +10,7 @@ bool pir2_triggered = false;
 unsigned long pir1_time = 0;
 unsigned long pir2_time = 0;
 const unsigned long timeout = 3000; // 3 seconds timeout for PIR sequence
+int personCount=0;
 
 void setup() {
   pinMode(pir1, INPUT);
@@ -20,10 +21,10 @@ void setup() {
   Serial.println("System Initialized");
 }
 
-void handlePIRLogic() {
+void pirControl() {
   unsigned long now = millis();
 
-  // PIR1 senses first
+  // PIR1 triggers first (inside)
   if (digitalRead(pir1) == HIGH && !pir1_triggered) {
     pir1_triggered = true;
     pir1_time = now;
@@ -32,7 +33,7 @@ void handlePIRLogic() {
     Serial.println("PIR1 triggered");
   }
 
-  // PIR2 senses first
+  // PIR2 triggers first (outside)
   if (digitalRead(pir2) == HIGH && !pir2_triggered) {
     pir2_triggered = true;
     pir2_time = now;
@@ -43,34 +44,36 @@ void handlePIRLogic() {
 
   // Entry: PIR1 then PIR2 within timeout
   if (pir1_triggered && pir2_triggered && pir2_time > pir1_time && pir2_time - pir1_time <= timeout) {
+    personCount++;
+    Serial.println("Entry Detected → Person Count: " + String(personCount));
     if (state == 0) {
-      state = 1;
-      digitalWrite(ledPin, HIGH); // Turn LED ON
-      Serial.println("Entry Detected → LED ON");
+      all_SwitchOn();
+      Serial.println("Appliances ON");
     }
     resetTriggers();
-    delay(1000); // Prevent immediate retriggering
+    delay(1000);
   }
 
   // Exit: PIR2 then PIR1 within timeout
   if (pir1_triggered && pir2_triggered && pir1_time > pir2_time && pir1_time - pir2_time <= timeout) {
-    if (state == 1) {
-      state = 0;
-      digitalWrite(ledPin, LOW); // Turn LED OFF
-      Serial.println("Exit Detected → LED OFF");
+    if (personCount > 0) personCount--;
+    Serial.println("Exit Detected → Person Count: " + String(personCount));
+    if (personCount == 0 && state == 1) {
+      all_SwitchOff();
+      Serial.println("Appliances OFF");
     }
     resetTriggers();
-    delay(1000); // Prevent immediate retriggering
+    delay(1000);
   }
 
   // Timeout auto-reset
   if (pir1_triggered && now - pir1_time > timeout) pir1_triggered = false;
   if (pir2_triggered && now - pir2_time > timeout) pir2_triggered = false;
 
-  // LED status feedback
+  // Relay status feedback
   static unsigned long lastPrint = 0;
   if (now - lastPrint > 1000) {
-    Serial.print("LED Status: ");
+    Serial.print("Relay Status: ");
     Serial.println(state ? "ON" : "OFF");
     lastPrint = now;
   }
@@ -84,5 +87,5 @@ void resetTriggers() {
 }
 
 void loop() {
-  handlePIRLogic(); 
+  pirControl(); 
 }
