@@ -36,7 +36,7 @@ char auth[] = BLYNK_AUTH_TOKEN;
 BlynkTimer timer;
 
 BLYNK_WRITE(VPIN_BUTTON_1) {
-  toggleState_1 = param.asInt();
+  toggleState_1 = param.asInt(); 
   digitalWrite(RelayPin1, !toggleState_1);
   pref.putBool("Relay1", toggleState_1);
   Serial.println("BLYNK: Relay 1 set to " + String(toggleState_1));
