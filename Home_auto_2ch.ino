@@ -95,7 +95,7 @@ void all_SwitchOff() {
 }
 
 void getRelayState() {
-  // Retrieves the state of Relay1 from NVS(EEPROM) when new powercycle started
+  // Retrieves the state of Relay1 from NVS when new powercycle started
   toggleState_1 = pref.getBool("Relay1", 0);
   Serial.println("Relay1 state from NVS: " + String(toggleState_1));
   digitalWrite(RelayPin1, !toggleState_1);
