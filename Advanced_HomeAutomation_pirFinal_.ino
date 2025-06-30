@@ -8,9 +8,8 @@
 #define BLYNK_TEMPLATE_NAME "ESP32 Smart Home Automation"
 #define BLYNK_AUTH_TOKEN "8eut-5ocuHFlTa5j9iAmYBJz3F01KLcR"
 
-char ssid[] = "IOTA";
-char pass[] = "1234abc";
-int personCount = 0; // Keeps track of number of persons in the room
+char ssid[] = "Anurag";
+char pass[] = "12345678";
 
 #define BLYNK_PRINT Serial
 #include <WiFi.h>
@@ -32,13 +31,13 @@ Preferences pref;
 
 bool toggleState_1 = LOW;
 bool toggleState_2 = LOW;
-int state = 0; // Tracks PIR state (0: OFF, 1: ON)
+int state = 0; // Tracks PIR state 
 bool pir1_triggered = false;
 bool pir2_triggered = false;
 unsigned long pir1_time = 0;
 unsigned long pir2_time = 0;
 const unsigned long timeout = 3000; // 3 seconds for PIR sequence
-
+int personCount = 0; // Keeps track of number of persons in the room
 int wifiFlag = 0;
 
 char auth[] = BLYNK_AUTH_TOKEN;
@@ -67,7 +66,7 @@ BLYNK_WRITE(VPIN_MAIN_SWITCH) {
     all_SwitchOff();
   }
 }
-
+// This function checks whether Blynk is connected with ESP or Not
 void checkBlynkStatus() {
   bool isconnected = Blynk.connected();
   if (!isconnected) {
@@ -80,7 +79,7 @@ void checkBlynkStatus() {
     Serial.println("Blynk Connected");
   }
 }
-
+// Updates the Blynk app with the current states of toggleState_1, toggleState_2, and mainSwitchState using virtualWrite.
 BLYNK_CONNECTED() {
   Blynk.virtualWrite(VPIN_BUTTON_1, toggleState_1);
   Blynk.virtualWrite(VPIN_BUTTON_2, toggleState_2);
@@ -105,6 +104,7 @@ void all_SwitchOff() {
 }
 
 void getRelayState() {
+  // Retrieves the state of Relay1 from NVS(EEPROM) when new powercycle started
   toggleState_1 = pref.getBool("Relay1", 0);
   Serial.println("Relay1 state from NVS: " + String(toggleState_1));
   digitalWrite(RelayPin1, !toggleState_1);
