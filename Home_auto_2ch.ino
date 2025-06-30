@@ -14,7 +14,7 @@ char pass[] = "1234abc";
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
-#include <Preferences.h>
+#include <Preferences.h> // Storing data in a part of ESP's Flash memeory
 
 Preferences pref;
 
