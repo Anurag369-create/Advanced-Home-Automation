@@ -1,5 +1,5 @@
 /**********************************************************************************
-  Smart Home Automation using ESP32 with Blynk 2.0 & EEPROM
+  Smart Home Automation using ESP32 with Blynk 2.0 & 
 
 **********************************************************************************/
 #define BLYNK_TEMPLATE_ID "TMPL3wC674Utu"
