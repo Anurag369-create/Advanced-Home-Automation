@@ -1,7 +1,7 @@
 // Using ESP32
 // Controlling an LED at pin 5 based on PIR sensors
-#define pir1 32 // Inside PIR sensor
-#define pir2 33 // Outside PIR sensor
+#define pir1 32 // outside PIR sensor
+#define pir2 33 // Inside PIR sensor
 #define ledPin 5 // LED pin
 
 int state = 0; //  PIR state 
