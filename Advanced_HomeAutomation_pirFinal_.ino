@@ -4,9 +4,10 @@
   Author : ANURAG KAR
   Also Credits to : Soumyajit Bhowal, Subhajit Khatua
 **********************************************************************************/
-#define BLYNK_TEMPLATE_ID "TMPL3S5f6Y5MV"
-#define BLYNK_TEMPLATE_NAME "ESP32 Smart Home Automation"
-#define BLYNK_AUTH_TOKEN "8eut-5ocuHFlTa5j9iAmYBJz3F01KLcR"
+#define BLYNK_TEMPLATE_ID "TMPL3wC674Utu"
+#define BLYNK_TEMPLATE_NAME "ESP32 Smart Home"
+#define BLYNK_AUTH_TOKEN "vnOBInfsfOS1znhQjPnjTeyaF5y-ZGG0"
+
 
 char ssid[] = "Anurag";
 char pass[] = "12345678";
@@ -22,8 +23,8 @@ Preferences pref;
 #define RelayPin1 23
 #define RelayPin2 22
 #define wifiLed 2
-#define pir1 32 // Inside PIR sensor
-#define pir2 33 // Outside PIR sensor
+#define pir1 32 // outside PIR sensor
+#define pir2 33 // inside PIR sensor
 
 #define VPIN_BUTTON_1 V1
 #define VPIN_BUTTON_2 V2
@@ -104,7 +105,7 @@ void all_SwitchOff() {
 }
 
 void getRelayState() {
-  // Retrieves the state of Relay1 from NVS(EEPROM) when new powercycle started
+  // Retrieves the state of Relay1 from NVS when new powercycle started
   toggleState_1 = pref.getBool("Relay1", 0);
   Serial.println("Relay1 state from NVS: " + String(toggleState_1));
   digitalWrite(RelayPin1, !toggleState_1);
